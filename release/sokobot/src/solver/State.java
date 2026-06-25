@@ -4,13 +4,15 @@ import java.util.*;
 
 public class State implements Comparable<State> {
     public final Coordinate player;
+    public final Coordinate canonicalPlayer;
     public final Set<Coordinate> crates;
-    public final char move;
+    public final String move;
     public final State predecessor;
     public int h, g, f;
 
-    public State(Coordinate player, Set<Coordinate> crates, char move, State pre, int h, int g) {
+    public State(Coordinate player, Coordinate canonicalPlayer, Set<Coordinate> crates, String move, State pre, int h, int g) {
         this.player = player;
+        this.canonicalPlayer = canonicalPlayer;
         this.crates = crates;
         this.move = move;
         this.predecessor = pre;
@@ -24,12 +26,12 @@ public class State implements Comparable<State> {
         if (this == obj) return true;
         if (!(obj instanceof State)) return false;
         State other = (State) obj;
-        return this.player.equals(other.player) && this.crates.equals(other.crates);
+        return this.canonicalPlayer.equals(other.canonicalPlayer) && this.crates.equals(other.crates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, crates);
+        return Objects.hash(canonicalPlayer, crates);
     }
 
     @Override
