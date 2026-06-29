@@ -3,7 +3,7 @@ package solver;
 import java.util.Objects;
 
 public class Coordinate {
-    public final int x; // Made public so SokoBot can access them
+    public final int x;
     public final int y;
 
     public Coordinate(int x, int y) {
