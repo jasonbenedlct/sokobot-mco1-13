@@ -35,8 +35,8 @@ public class SokoBot {
         PriorityQueue<State> frontier = new PriorityQueue<>();
         Set<State> visitedStates = new HashSet<>();
 
-        State initialState = new State(startPlayer, startCanonical, initialBoxes, ' ', null, 0);
-        initialState.h = heuristic(initialBoxes);
+        int initialH = heuristic(initialBoxes);
+        State initialState = new State(startPlayer, startCanonical, initialBoxes, ' ', null, initialH);
         frontier.add(initialState);
 
         while (!frontier.isEmpty()) {
@@ -52,7 +52,6 @@ public class SokoBot {
             for (State successor : getSuccessors(current, width, height)) {
                 if (visitedStates.contains(successor)) continue;
 
-                successor.h = heuristic(successor.boxes);
                 frontier.add(successor);
             }
         }
@@ -74,8 +73,6 @@ public class SokoBot {
                     if (!walls.contains(beyondCratePos) && !current.boxes.contains(beyondCratePos)) {
                         if (isDeadlockCorner(beyondCratePos)) continue;
 
-                        int walkingDistance = reachableZone.get(playerPos).distance;
-                        int pathCostForThisPush = walkingDistance + 1;
 
                         Set<Coordinate> updatedCrates = new HashSet<>(current.boxes);
                         updatedCrates.remove(cratePos);
@@ -83,13 +80,14 @@ public class SokoBot {
 
                         Coordinate updatedCanonical = getCanonicalPlayer(cratePos, updatedCrates, width, height);
 
+                        int nextH = heuristic(updatedCrates);
                         State nextState = new State(
                                 cratePos,
                                 updatedCanonical,
                                 updatedCrates,
                                 charDirection[d],
                                 current,
-                                current.g + pathCostForThisPush
+                                nextH
                         );
                         successors.add(nextState);
                     }

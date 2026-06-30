@@ -9,22 +9,20 @@ public class State implements Comparable<State> {
     public final char move;
     public final State predecessor;
     public int h;
-    public int g;
 
-    public State(Coordinate player, Coordinate canonicalPlayer, Set<Coordinate> boxes, char move, State pre, int g) {
+    public State(Coordinate player, Coordinate canonicalPlayer, Set<Coordinate> boxes, char move, State pre, int h) {
         this.player = player;
         this.canonicalPlayer = canonicalPlayer;
         this.boxes = boxes;
         this.move = move;
         this.predecessor = pre;
-        this.g = g;
+        this.h = h;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof State)) return false;
-        State other = (State) obj;
+        if (!(obj instanceof State other)) return false;
         return this.canonicalPlayer.equals(other.canonicalPlayer) && this.boxes.equals(other.boxes);
     }
 
