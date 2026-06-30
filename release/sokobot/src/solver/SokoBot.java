@@ -152,14 +152,14 @@ public class SokoBot {
         return canonical;
     }
 
-    private boolean isPuzzleSolved(Set<Coordinate> crates) {
+    public boolean isPuzzleSolved(Set<Coordinate> crates) {
         for (Coordinate goal : goals) {
             if (!crates.contains(goal)) return false;
         }
         return true;
     }
 
-    private boolean isDeadlockCorner(Coordinate targetTile) {
+    public boolean isDeadlockCorner(Coordinate targetTile) {
         if (goals.contains(targetTile)) return false;
 
         boolean up = walls.contains(new Coordinate(targetTile.x, targetTile.y - 1));
@@ -170,7 +170,7 @@ public class SokoBot {
         return (up && left) || (up && right) || (down && left) || (down && right);
     }
 
-    private String reconstructFullPath(State finalState) {
+    public String reconstructFullPath(State finalState) {
         StringBuilder absolutePathSequence = new StringBuilder();
         State current = finalState;
 
@@ -187,7 +187,7 @@ public class SokoBot {
         return absolutePathSequence.reverse().toString();
     }
 
-    private String traceWalkPathBetweenPoints(Coordinate from, Coordinate to, Set<Coordinate> obstacles) {
+    public String traceWalkPathBetweenPoints(Coordinate from, Coordinate to, Set<Coordinate> obstacles) {
         if (from.equals(to)) return "";
 
         Map<Coordinate, WalkTracker> trackerMap = new HashMap<>();
@@ -221,13 +221,13 @@ public class SokoBot {
         return route.toString();
     }
 
-    private int getXDirectionOffset(char move) {
+    public int getXDirectionOffset(char move) {
         if (move == 'l') return -1;
         if (move == 'r') return 1;
         return 0;
     }
 
-    private int getYDirectionOffset(char move) {
+    public int getYDirectionOffset(char move) {
         if (move == 'u') return -1;
         if (move == 'd') return 1;
         return 0;
