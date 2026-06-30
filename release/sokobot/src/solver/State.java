@@ -22,7 +22,8 @@ public class State implements Comparable<State> {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof State other)) return false;
+        if (!(obj instanceof State)) return false;
+        State other = (State) obj;
         return this.canonicalPlayer.equals(other.canonicalPlayer) && this.boxes.equals(other.boxes);
     }
 
